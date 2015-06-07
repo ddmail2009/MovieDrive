@@ -23,8 +23,7 @@
   }
   </script>
   <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -71,12 +70,20 @@
 
   <div class="container">
     <div id='movie-list'>
-      
+      <% for(i in movies) { %>
+        <a href=<%= movies[i].alternateLink %> class="col-md-3 movie-item">
+          <img src="poster.jpg" alt="template-poster" class="movie-poster">
+          <div class="movie-title"><%= movies[i].title %></div>
+          <div class="movie-meta"><%= 4.6 %></div>
+        </a>
+      <% } %>
     </div>
   </div>
   
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="tmdb.js"></script>
 <script>
 // movieData: {title, img, alternateLink}
 function addMovieItem(movieData){

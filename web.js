@@ -14,7 +14,6 @@ app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
-
 var server = app.listen(3000, function(){
   var host = server.address().address;
   var port = server.address().port;
@@ -22,8 +21,17 @@ var server = app.listen(3000, function(){
   console.log("movie theater is listening at http://%s:%s", host, port);
 });
 
+// resources preloading
+var movies;
+fs.readFile("movieList.txt", function(err, data){
+  if(err) throw err;
+  movies = JSON.parse(data);
+})
+
+
+// application url setting
 app.get("/", function(req, res){
-  res.render("index.html")
+  res.render("index.html", {"movies": movies})
 })
 
 app.post("/updateMovieList", function(req, res){
