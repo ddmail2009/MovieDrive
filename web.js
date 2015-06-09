@@ -10,14 +10,14 @@ app.use(bodyParser.urlencoded({
   limit: '5mb'
 }));
 app.set('views',__dirname + '/views');
+app.set('port', (process.env.PORT || 3000))
 
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
-var server = app.listen(3000, function(){
+var server = app.listen(app.get('port', function(){
   var host = server.address().address;
   var port = server.address().port;
-
   console.log("movie theater is listening at http://%s:%s", host, port);
 });
 
