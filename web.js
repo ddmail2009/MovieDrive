@@ -15,7 +15,7 @@ app.set('port', (process.env.PORT || 3000))
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
-var server = app.listen(app.get('port', function(){
+var server = app.listen(app.get('port'), function(){
   var host = server.address().address;
   var port = server.address().port;
   console.log("movie theater is listening at http://%s:%s", host, port);
@@ -26,7 +26,7 @@ var movies;
 fs.readFile("movieList.txt", function(err, data){
   if(err) throw err;
   movies = JSON.parse(data);
-})
+});
 
 
 // application url setting
