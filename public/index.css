@@ -12,6 +12,10 @@ a, a:hover, a:focus, a:active{
   display: none;
 }
 
+.item-row{
+  margin-top: 10px;
+}
+
 .movie-poster{
   width: 100%;
   display: table;
@@ -30,4 +34,8 @@ a, a:hover, a:focus, a:active{
   text-indent: 3px;
     overflow: hidden;
   white-space: nowrap;
+}
+
+.poster-hovered{
+  border: 2px solid rgb(125, 255, 0);
 }

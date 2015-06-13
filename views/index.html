@@ -15,7 +15,8 @@
   function checkAuth() {
     gapi.auth.authorize({
       'client_id': CLIENT_ID, 
-      'scope': SCOPES
+      'scope': SCOPES,
+      'immediate': true
     }, function(result){console.log(result)});
     gapi.client.setApiKey("AIzaSyD3p7GPEfgoitTwNI0Qj930vz_-9tRjqnk");
     gapi.client.load("drive", "v2");
@@ -67,17 +68,8 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container">
+  <div class="container-fluid">
     <div id='movie-list'>
-      <% for(i in movies) { %>
-        <% if (i%6 == 0) { %> <div class='movie-row row'> <% } %>
-        <a href=<%= movies[i].alternateLink %> class="col-md-2 movie-item">
-          <img src="<%= movies[i].img %>" alt="template-poster" class="movie-poster">
-          <div class="movie-title"><%= movies[i].title %></div>
-          <div class="movie-meta"><%= movies[i].release_date %></div>
-        </a>
-        <% if (i%6 == 5) { %> </div> <% } %>
-      <% } %>
     </div>
   </div>
   
@@ -86,10 +78,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="tmdb.js"></script>
 <script>
+var movies = <%- JSON.stringify(movies) %> ;
+movies.sort(function(a, b){
+  if(a.title > b.title) return 1;
+  else if(a.title < b.title) return -1;
+  else return 0;
+});
+
 // movieData: {title, img, alternateLink}
 function addMovieItem(movieData){
   var template = $("#movie-item-template").html();
-
   template = template.replace("#", movieData.alternateLink);
   template = template.replace("poster.jpg", movieData.img);
   template = template.replace("movie-title\">", "movie-title\">"+movieData.title);
@@ -127,78 +125,95 @@ function retrieveAllFiles(callback) {
   retrievePageOfFiles(initialRequest, []);
 }
 
+function splitFolderName(name){
+  var m, title=name, year;
+  if((m = /(?!\()[0-9]{4}(?=\))/.exec(name)) != null){
+    title = name.slice(0, m.index-2);
+    year = m[0];
+  }
+  return {"title": title, "year": year};
+}
+
 $(document).ready(function(){
+  for(i in movies){
+    addMovieItem(movies[i]);
+  }
+
   function updateMovieList(){
     $("#movie-list").html("");
 
-    retrieveAllFiles(function(data){
-      list = data;
-      console.log(list)
-
-      list.sort(function(a, b){
-        if(a.title > b.title) return 1;
-        else if(a.title < b.title) return -1;
-        else return 0;
-      })
-
-
+    retrieveAllFiles(function(list){
       var defered = [];
       $.each(list, function(i){
-        var link = list[i].alternateLink;
-        var title = list[i].title;
-        var year = null;
-        
-        var m;
-        if((m = /(?!\()[0-9]{4}(?=\))/.exec(list[i].title)) != null){
-          title = list[i].title.slice(0, m.index-2);
-          year = m[0];
-        }
+        var meta = splitFolderName(list[i]["title"]);
+        meta['link'] = list[i].alternateLink;
 
-        console.log("retrieving " + title + "@" + year + ", " + link);
-        defered.push($.ajax({
-          method: "GET", 
-          url: "http://api.themoviedb.org/3/search/movie",
-          data: {
-            api_key: "304f4c3ad090ac7a11e707e9cf034ddf", 
-            query: title,
-            year: null
-          },
-          indexValue: i,
-          success: function(data){
-            bestFit = {"title": "no match", "img": "poster.jpg", "alternateLink": "#", "votes": -1};
-            for(j in data.results){
-              if(data.results[j].vote_average*data.results[j].vote_count > bestFit.votes) 
-                bestFit = data.results[j];
-            }
-
-            list[this.indexValue].folder_title = list[this.indexValue].title;
-            list[this.indexValue].title = bestFit.title || bestFit.original_name;
-
-            list[this.indexValue].img = "https://image.tmdb.org/t/p/w396" + bestFit.poster_path;
-            list[this.indexValue].release_date = bestFit.release_date;
-
-            console.log(data);
-            console.log(this.indexValue);
-            console.log(list[this.indexValue]);
+        var exist = false;
+        for(s in movies){
+          if(movies[s].folder_strip_title == meta['title']){
+            exist = true;
+            break;
           }
-        }));
-      });
+        }
+        console.log(movies[s].folder_strip_title);
+        console.log(meta['title']);
+        console.log("");
 
+        if(exist == false){
+          defered.push($.ajax({
+            method: "GET", 
+            url: "http://api.themoviedb.org/3/search/movie",
+            data: {
+              api_key: "304f4c3ad090ac7a11e707e9cf034ddf", 
+              query: meta["title"],
+              year: null
+            },
+            indexValue: i,
+            strip_title: meta['title'],
+            success: function(data){
+              bestFit = {"title": "no match", "img": "poster.jpg", "alternateLink": "#", "votes": -1};
+              for(j in data.results){
+                if(data.results[j].vote_average*data.results[j].vote_count > bestFit.votes) 
+                  bestFit = data.results[j];
+              }
+
+              list[this.indexValue].folder_title = list[this.indexValue].title;
+              list[this.indexValue].folder_strip_title = this.strip_title;
+              list[this.indexValue].title = bestFit.title || bestFit.original_name;
+
+              // https://image.tmdb.org/t/p/w300
+              list[this.indexValue].img = "/poster" + bestFit.poster_path;
+              list[this.indexValue].release_date = bestFit.release_date;
+              movies.push(list[this.indexValue]);
+
+              console.log(this.indexValue);
+              console.log(data);
+              console.log(list[this.indexValue]);
+            }
+          }));
+        }
+      });
+  
       // generate the movie template
       $.when.apply(null, defered).done(function(){
         // save the update list to the server
-        $.post("/updateMovieList", {"movie": JSON.stringify(list)}, function(data){
+        $.post("/updateMovieList", {"movie": movies}, function(data){
           console.log("post return data: " + data);
         });
 
         $.each(list, function(i){
-          addMovieItem(list[i]);
+          addMovieItem(movies);
         });
       })
     });
   }
 
   $("#refresh").click(updateMovieList);
+  $(".movie-item").hover(function(){
+    $(this).find(".movie-poster").addClass("poster-hovered");
+  }, function(){
+    $(this).find(".movie-poster").removeClass("poster-hovered");
+  })
   $(document).scroll(function(){
     if(document.body.scrollTop > 64)
       $(".navbar").addClass("navbar-fixed-top");
@@ -216,10 +231,12 @@ $(document).ready(function(){
 </script>
 
 <script type='template' id='movie-item-template'>
-<a href='#' class="col-md-2 movie-item">
-<img src="poster.jpg" alt="template-poster" class="movie-poster">
+<div class='col-md-2 col-sm-4 col-xs-6'>
+<a href='#' class="movie-item">
+<img src="poster.jpg" alt="template-poster" class="movie-poster hidden-xs">
 <div class="movie-title"></div>
 <div class="movie-meta"></div>
 </a>
+</div>
 </script>
 </html>
