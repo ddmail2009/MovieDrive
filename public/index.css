@@ -8,12 +8,8 @@ a, a:hover, a:focus, a:active{
   text-decoration: none;
 }
 
-.nav-icon-text{
-  display: none;
-}
-
-.item-row{
-  margin-top: 10px;
+.movie-row{
+  margin-bottom: 10px;
 }
 
 .movie-poster{

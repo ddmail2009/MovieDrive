@@ -23,9 +23,9 @@ var server = app.listen(app.get('port'), function(){
 });
 
 // resources preloading
-var movies;
+var movies = [];
 fs.readFile("movieList.txt", function(err, data){
-  if(err) throw err;
+  if(err) return;
   movies = JSON.parse(data);
 });
 
@@ -71,9 +71,7 @@ app.get("/poster/:posterURL", function(req, res){
 });
 
 app.post("/updateMovieList", function(req, res){
-  console.log(req.body);
-  var movies = req.body.movie;
-  movies = JSON.parse(movies);
+  movies = JSON.parse(req.body.movie);
 
   console.log(movies);
   fs.writeFile("movieList.txt", JSON.stringify(movies, null, "\t"), function(err, data){
