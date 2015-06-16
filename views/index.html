@@ -24,9 +24,9 @@
     }, handleAuthResult);
   }
 
-  function printFile(fieldId){
+  function printFile(fileId){
     var request = gapi.client.drive.files.get({
-      'fieldId': fieldId
+      'fileId': fileId
     });
 
     request.execute(function(resp){
