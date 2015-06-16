@@ -32,7 +32,9 @@
       $("#authButton").hide();
 
     } else {
-      checkAuth(false);
+      $("#authButton").click(function(){
+        checkAuth(false);
+      }).show();
     }
 
   }
@@ -85,7 +87,7 @@
             </a>
           </li>
           <li>
-            <a href="#" id="authButton" class='btn-default'>
+            <a href="#" id="authButton" class='btn-default' style="display:none">
               <span class='nav-icon'><img src='gDrive.png' style='height: 20px;'></span>
               <span class='nav-icon-text'>Drive</span>
             </a>
