@@ -25,12 +25,9 @@
   }
 
   function loadMovieList(){
-    var initialRequest = gapi.client.drive.files.list({
-      'q': "'0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg' in parents",
-      'maxResults': 1000,
-      'fields': 'items(lastModifyingUser,alternateLink,indexableText,id,description,downloadUrl,originalFilename,exportLinks,mimeType,createdDate,modifiedDate,fileExtension,fileSize,quotaBytesUsed,defaultOpenWithLink,videoMediaMetadata,kind,ownerNames,parents,title,properties,selfLink,lastModifyingUserName,openWithLinks),kind'
+    var initialRequest = gapi.client.drive.children.list({
+      'folderID': 'root'
     });
-    console.log("test");
     console.log(initialRequest);
   }
 
