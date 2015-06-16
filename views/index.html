@@ -24,6 +24,16 @@
     }, handleAuthResult);
   }
 
+  function printFile(fieldId){
+    var request = gapi.client.drive.files.get({
+      'fieldId': fieldId
+    });
+
+    request.execute(function(resp){
+      console.log(resp);
+    });
+  }
+
   function loadDirectoryList(folderId, callback){
     var retrievePageOfChildren = function(request, result){
       request.execute(function(resp){
@@ -51,7 +61,11 @@
   }
 
   function loadMovieList(){
-    loadDirectoryList('0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg', console.log);
+    loadDirectoryList('0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg', function(result){
+      for(i in result){
+        printFile(i.id);
+      }
+    });
   }
 
   function handleAuthResult(authResult) {
