@@ -9,20 +9,35 @@
   <link rel="stylesheet" type="text/css" href="index.css">
   
   <script type="text/javascript">
-  var CLIENT_ID = '169353091474-fms13nkdpeao8m2anr7uutsjsqi20aq3.apps.googleusercontent.com';
+  var CLIENT_ID = '1068860848835-b6ak1k2t42f3nd17ngepsj6m08um0lol.apps.googleusercontent.com';
   var SCOPES = ['https://www.googleapis.com/auth/drive'];
 
-  function checkAuth() {
+  function handleClientLoad() {
+    checkAuth(true);
+  }
+
+  function checkAuth(immediate) {
     gapi.auth.authorize({
-      'client_id': CLIENT_ID, 
+      'client_id': CLIENT_ID,
       'scope': SCOPES,
-      'immediate': true
-    }, function(result){console.log(result)});
-    gapi.client.setApiKey("AIzaSyD3p7GPEfgoitTwNI0Qj930vz_-9tRjqnk");
-    gapi.client.load("drive", "v2");
+      'immediate': immediate
+    }, handleAuthResult);
+  }
+
+  function handleAuthResult(authResult) {
+    console.log(authResult);
+
+    if(authResult && !authResult.error) {
+      gapi.client.load("drive", "v2");
+      $("#authButton").hide();
+
+    } else {
+      checkAuth(false);
+    }
+
   }
   </script>
-  <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+  <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
   
 </head>
 <body>
@@ -64,7 +79,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#" class='btn-default'>
+            <a href="#" id="authButton" class='btn-default'>
               <span class='nav-icon'><i class='fa fa-refresh'></i></span>
               <span id='refresh' class='nav-icon-text'>Refresh</span>
             </a>
