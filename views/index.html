@@ -106,7 +106,7 @@
 <script src="whenAll.js"></script>
 <script src="tmdb.js"></script>
 <script>
-var movies = <%- JSON.stringify(movies) %> ;
+var movies = [];//<%- JSON.stringify(movies) %> ;
 var defered = [];
 function addMovieItems(movies, sortField, reverse){
   sortField = sortField || "title";
