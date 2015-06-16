@@ -12,74 +12,32 @@
   var CLIENT_ID = '1068860848835-b6ak1k2t42f3nd17ngepsj6m08um0lol.apps.googleusercontent.com';
   var SCOPES = ['https://www.googleapis.com/auth/drive'];
 
-  function handleClientLoad() {
-    checkAuth(true);
-  }
-
-  function checkAuth(immediate) {
+  function checkAuth() {
     gapi.auth.authorize({
-      'client_id': CLIENT_ID,
-      'scope': SCOPES,
-      'immediate': immediate
+      'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true
     }, handleAuthResult);
   }
 
-  function printFile(fileId){
-    var request = gapi.client.drive.files.get({
-      'fileId': fileId
-    });
-
-    request.execute(function(resp){
-      console.log(resp);
-    });
+  function handleAuthClick(event){
+    gapi.auth.authorize({
+      'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false
+    }, handleAuthResult);
   }
 
-  function loadDirectoryList(folderId, callback){
-    var retrievePageOfChildren = function(request, result){
-      request.execute(function(resp){
-        result = result.concat(resp.items);
-
-        var nextPageToken = resp.nextPageToken;
-        if(nextPageToken){
-          request = gapi.client.drive.children.list({
-            'folderId': folderId,
-            'pageToken': nextPageToken
-          });
-
-          retrievePageOfChildren(request, result);
-        } else {
-          callback(result);
-        }
-      });
-    }
-
-    var initialRequest = gapi.client.drive.children.list({
-      'folderId': folderId
-    });
-
-    retrievePageOfChildren(initialRequest, []);
-  }
-
-  function loadMovieList(){
-    loadDirectoryList('0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg', function(result){
-      for(i in result){
-        printFile(i.id);
-      }
-    });
-  }
-
-  function handleAuthResult(authResult) {
+  function handleAuthResult(authResult){
     console.log(authResult);
 
-    if(authResult && !authResult.error) {
-      $("#authButton").hide();
-      gapi.client.load("drive", "v2").then(loadMovieList);
+    if(authResult && !authResult.error){
+      $('#refresh').show();
+      $('#authButton').hide();
+      gapi.client.load("drive", "v2");
     } else {
-      $("#authButton").show();
+      $('#refresh').hide();
+      $('#authButton').show();
     }
   }
   </script>
-  <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+  <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
   
 </head>
 <body>
@@ -121,13 +79,13 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#" class='btn-default'>
+            <a href="#" id='refresh' class='btn-default' style="display: none;">
               <span class='nav-icon'><i class='fa fa-refresh'></i></span>
-              <span id='refresh' class='nav-icon-text'>Refresh</span>
+              <span class='nav-icon-text'>Refresh</span>
             </a>
           </li>
           <li>
-            <a href="#" id="authButton" class='btn-default'>
+            <a href="#" id="authButton" onclick="handleAuthClick()" class='btn-default' style="display: none;">
               <span class='nav-icon'><img src='gDrive.png' style='height: 20px;'></span>
               <span class='nav-icon-text'>Drive</span>
             </a>
@@ -150,7 +108,6 @@
 <script>
 var movies = <%- JSON.stringify(movies) %> ;
 var defered = [];
-
 function addMovieItems(movies, sortField, reverse){
   sortField = sortField || "title";
   reverse = reverse || false;
@@ -162,7 +119,6 @@ function addMovieItems(movies, sortField, reverse){
     else return 0;
   });
   if(reverse) movies.reverse();
-
   for(i in movies){
     var template = $("#movie-item-template").html();
     template = template.replace("#", movies[i].alternateLink);
@@ -171,20 +127,16 @@ function addMovieItems(movies, sortField, reverse){
     template = template.replace("movie-meta\">", "movie-meta\">"+
                                 movies[i].vote_average + "<i class=\"fa fa-star\"></i> " + 
                                 movies[i].release_date);
-
     var num = $(".movie-item").length;
     if(num%6 == 0) $("#movie-list").append("<div class=\"movie-row row\"></div>");
-
-
     $(".movie-row:last-child").append(template);
   }
   $(".movie-item").hover(function(){
     $(this).find(".movie-poster").addClass("poster-hovered");
   }, function(){
     $(this).find(".movie-poster").removeClass("poster-hovered");
-  })
+  });
 }
-
 function retrieveAllFiles(callback) {
   var retrievePageOfFiles = function(request, result) {
     console.log("retrieve Movie Drive List");
@@ -210,7 +162,6 @@ function retrieveAllFiles(callback) {
   });
   retrievePageOfFiles(initialRequest, []);
 }
-
 function splitFolderName(name){
   var m, title=name, year;
   if((m = /(?!\()[0-9]{4}(?=\))/.exec(name)) != null){
@@ -219,11 +170,9 @@ function splitFolderName(name){
   }
   return {"title": title, "year": year};
 }
-
 function fetchAJAXCall(list, i){
   var meta = splitFolderName(list[i]["title"]);
   meta['link'] = list[i].alternateLink;
-
   var exist = false;
   for(s in movies){
     if(movies[s].folder_strip_title == meta['title']){
@@ -250,12 +199,10 @@ function fetchAJAXCall(list, i){
           if(data.results[j].vote_average*data.results[j].vote_count > bestFit.votes) 
             bestFit = data.results[j];
         }
-
         list[this.indexValue].folder_title = list[this.indexValue].title;
         list[this.indexValue].folder_strip_title = this.strip_title;
         list[this.indexValue].title = bestFit.title || bestFit.original_name;
         list[this.indexValue].vote_average = bestFit.vote_average;
-
         list[this.indexValue].img = "/poster" + bestFit.poster_path;
         list[this.indexValue].release_date = bestFit.release_date;
         console.log(this.indexValue);
@@ -266,7 +213,6 @@ function fetchAJAXCall(list, i){
     }));
   }
 }
-
 function fetchMovieMeta(list, callback, start){
   defered = [];
   start = start | 0;
@@ -274,7 +220,6 @@ function fetchMovieMeta(list, callback, start){
   $.each(list.slice(start, start+40), function(i){
     fetchAJAXCall(list, i+start, 0);
   });
-
   if(start + 40 >= list.length && callback){
     $.when.apply(null, defered).then(callback);
   } else {
@@ -283,10 +228,8 @@ function fetchMovieMeta(list, callback, start){
     }, 11000);
   }
 }
-
 $(document).ready(function(){
   if(movies.length) addMovieItems(movies, "title");
-
   function updateMovieList(){
     retrieveAllFiles(function(list){
       fetchMovieMeta(list, function(startIndex){
@@ -300,7 +243,6 @@ $(document).ready(function(){
       });
     });
   }
-
   $("#refresh").click(updateMovieList);
   $("#sortTitle").click(function(){
     $("#movie-list").html("");
@@ -314,16 +256,13 @@ $(document).ready(function(){
     $("#movie-list").html("");
     addMovieItems(movies, "vote_average", true);
   });
-  $("#authButton").click(function(){
-    checkAuth(false);
-  });
 
   $(document).scroll(function(){
     if(document.body.scrollTop > 64)
       $(".navbar").addClass("navbar-fixed-top");
     else
       $(".navbar").removeClass("navbar-fixed-top");
-  })
+  });
 });
 </script>
 
