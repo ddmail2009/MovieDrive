@@ -32,9 +32,7 @@
       $("#authButton").hide();
 
     } else {
-      $("#authButton").click(function(){
-        checkAuth(false);
-      }).show();
+      $("#authButton").show();
     }
 
   }
@@ -87,7 +85,7 @@
             </a>
           </li>
           <li>
-            <a href="#" id="authButton" class='btn-default' style="display:none">
+            <a href="#" id="authButton" class='btn-default'>
               <span class='nav-icon'><img src='gDrive.png' style='height: 20px;'></span>
               <span class='nav-icon-text'>Drive</span>
             </a>
@@ -273,6 +271,9 @@ $(document).ready(function(){
   $("#sortRate").click(function(){
     $("#movie-list").html("");
     addMovieItems(movies, "vote_average", true);
+  });
+  $("#authButton").click(function(){
+    checkAuth(false);
   });
 
   $(document).scroll(function(){
