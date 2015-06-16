@@ -26,7 +26,7 @@
 
   function loadMovieList(){
     var initialRequest = gapi.client.drive.children.list({
-      'folderID': 'root'
+      'folderId': 'root'
     });
     console.log(initialRequest);
   }
