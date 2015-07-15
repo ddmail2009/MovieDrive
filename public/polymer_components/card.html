@@ -1,84 +1,25 @@
 <link rel="import" href="/components/polymer/polymer.html">
 
 <dom-module id="movie-card">
-  <style>
-    .movie-card-root{
-      background: white;
-      transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1);, box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1);;
 
-      box-shadow: 5px 3px 10px;
-    }
-
-    .movie-card-root:hover{
-      box-shadow: 10px 6px 15px;
-    }
-    .poster-root{
-      padding: 10px;
-    }
-
-    .overlay{
-      width: 270px;
-      height: 400px;
-      position: absolute;
-      top: 10px;
-      background-color: rgba(0, 0, 0, 0.4);
-      opacity: 0;
-      transition: opacity 0.2s ease-out;
-    }
-    .overlay:hover{
-      opacity: 1;
-    }
-
-    .overlay > i{
-      font-size: 56px;
-      color: white;
-      position: relative;
-      top: 330px;
-      left: 20px;
-    }
-
-    .movie-poster{
-      width: 280px;
-      height: 400px;
-      display: table;
-    }
-
-    .movie-title{
-      font-size: 16px;
-      color: black;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .movie-meta{
-      font-size: 14px;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .movie-data{
-      padding: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/card.css">
   <template>
     <!-- bind to the "owner" property -->
-    <div class='col-md-2 col-sm-4 col-xs-6'>
-      <div class="movie-card-root">
-        <a href='{{link}}' class="movie-item">
-          <div class="poster-root">
-            <img src="{{poster}}" onerror="this.src='/poster.jpg'" alt="poster" class="movie-poster img-responsive">
-            <div class="overlay">
-              <i class="fa fa-play"></i>
-            </div>
+    <div class="movie-card-root">
+      <a href='{{link}}' class="movie-item">
+        <div class="poster-root">
+          <img src="{{poster}}" onerror="this.src='/poster.jpg'" alt="poster" class="movie-poster img-responsive">
+          <div class="overlay">
+            <i class="fa fa-play"></i>
           </div>
-          <div class="movie-data">
-            <div class="movie-title">{{title}}</div>
-            <div class="movie-meta">{{meta}}</div>
-            <star-rating rate="{{ComputeRate(score)}}"></star-rating>
-            <content></content>
-          </div>
-        </a>
-      </div>
+        </div>
+        <div class="movie-data">
+          <div class="movie-title">{{title}}</div>
+          <div class="movie-meta">{{meta}}</div>
+          <star-rating rate="{{ComputeRate(score)}}"></star-rating>
+          <content></content>
+        </div>
+      </a>
     </div>
   </template>
 

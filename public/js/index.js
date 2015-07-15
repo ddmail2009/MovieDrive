@@ -27,9 +27,7 @@ function addMovieItems(movies, sortField, reverse){
     template = $(template).attr("score", movies[i].vote_average);
     template = $(template).attr("meta", movies[i].release_date);
 
-    var num = $(".movie-item").length;
-    if(num%6 == 0) $("#movie-list").append("<div class=\"movie-row row\"></div>");
-    $(".movie-row:last-child").append(template);
+    $("#movie-list").append(template);
   }
   $(".movie-item").hover(function(){
     $(this).find(".movie-poster").addClass("poster-hovered");

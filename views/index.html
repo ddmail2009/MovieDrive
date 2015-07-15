@@ -3,19 +3,22 @@
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
   <script src="components/webcomponentsjs/webcomponents.min.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css" rel="stylesheet"> -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="stylesheet" type="text/css" href="/css/index.css">
 
   <link rel="import" href="components/font-roboto/roboto.html">
-  <link rel="import" href="polymer_components/card.html">
-  <link rel="import" href="polymer_components/star_rating.html">
-  <link rel="import" href="components/paper-progress/paper-progress.html">
   <link rel="import" href="components/paper-progress/paper-progress.html">
   <link rel="import" href="components/paper-header-panel/paper-header-panel.html">
   <link rel="import" href="components/paper-toolbar/paper-toolbar.html">
   <link rel="import" href="components/paper-button/paper-button.html">
-
+  <link rel="import" href="components/paper-input/paper-input.html">
+  <link rel="import" href="components/iron-input/iron-input.html">
+  <link rel="import" href="components/paper-drawer-panel/paper-drawer-panel.html">
+  <link rel="import" href="components/paper-item/paper-item.html">
+  <link rel="import" href="components/paper-item/paper-icon-item.html">
+  <link rel="import" href="polymer_components/card.html">
+  <link rel="import" href="polymer_components/star_rating.html">
   <script type="text/javascript">
     var CLIENT_ID = '169353091474-fms13nkdpeao8m2anr7uutsjsqi20aq3.apps.googleusercontent.com';
     var SCOPES = ['https://www.googleapis.com/auth/drive'];
@@ -50,88 +53,51 @@
   <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 </head>
 <body>
-<!--   <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><i class="fa fa-film"></i>Movie Drive</a>
-      </div>
 
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li>
-            <a href="#" id='sortTitle' class="btn-default">
-              <i class='fa fa-sort-alpha-asc'></i>By Title
-            </a>
-          </li>
-          <li>
-            <a href="#" id="sortRate" class="btn-default">
-              <i class='fa fa-sort-numeric-desc'></i>By Rating
-            </a>
-          </li>
-          <li>
-            <a href="#" id="sortDate" class="btn-default">
-              <i class='fa fa-sort'></i>By Release Date
-            </a>
-          </li>
-        </ul>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input id="search" type="text" class="form-control" placeholder="Search">
-          </div>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a href="#" id='refresh' class='btn-default' style="display: none;">
-              <span class='nav-icon'><i class='fa fa-refresh'></i></span>
-              <span class='nav-icon-text'>Refresh</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" id='refreshAll' class='btn-default' style="display: none;">
-              <span class='nav-icon'><i class='fa fa-refresh'></i></span>
-              <span class='nav-icon-text'>Refresh All</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" id="authButton" onclick="handleAuthClick()" class='btn-default' style="display: none;">
-              <span class='nav-icon'><img src='gDrive.png' style='height: 20px;'></span>
-              <span class='nav-icon-text'>Auth</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://drive.google.com/drive/u/1/folders/0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg" id="godrive" class='btn-default'>
-              <span class='nav-icon'><img src='gDrive.png' style='height: 20px;'></span>
-              <span class='nav-icon-text'>Drive</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
+<paper-drawer-panel>
+  <paper-header-panel drawer>
+    <paper-toolbar>
+      <div class="title"><i class='fa fa-film'></i>MovieDrive</div>
+    </paper-toolbar>
+    <div>
+      <paper-icon-item id="sortTitle">
+        <i class="fa fa-sort-alpha-asc" item-icon></i>
+        By Title
+      </paper-icon-item>
+      <paper-icon-item id="sortRate">
+        <i class="fa fa-sort-numeric-desc" item-icon></i>
+        By Rating
+      </paper-icon-item>
+      <paper-icon-item id="sortDate">
+        <i class="fa fa-sort" item-icon></i>
+        By Release Date
+      </paper-icon-item>
 
-<paper-header-panel mode="waterfall">
-  <paper-toolbar>
-    <div class="title"><i class='fa fa-film'></i>MovieDrive</div>
-      <paper-button href="#" id='sortTitle'>
-        <i class='fa fa-sort-alpha-asc'></i>By Title
-      </paper-button>
-      <paper-button href="#" id="sortRate">
-        <i class='fa fa-sort-numeric-desc'></i>By Rating
-      </paper-button>
-      <paper-button href="#" id="sortDate">
-        <i class='fa fa-sort'></i>By Release Date
-      </paper-button>
-  <form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search Title or Date" id="search">
+      <paper-input-container auto-validate alwaysFloatLabel>
+      <label>Search</label>
+      <input is="iron-input" id="search">
+    </paper-input-container>
+      <paper-icon-item onclick="window.location='https://drive.google.com/drive/u/1/folders/0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg'">
+        <img src='gDrive.png' style='height: 20px;' item-icon> 
+        View in Drive
+      </paper-icon-item>
     </div>
-  </form>
+  </paper-header-panel>
+  <paper-header-panel main>
+    <paper-toolbar>
+      <paper-button paper-drawer-toggle>
+          <i class="fa fa-bars"></i>
+      </paper-button>
+    
+    
+
+<!-- 
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search Title or Date" id="search">
+        </div>
+      </form>
+ -->
     <paper-button href="#" id='refresh' style="display: none;">
       <i class='fa fa-refresh'></i>Refresh
     </paper-button>
@@ -141,20 +107,15 @@
     <paper-button href="#" id='authButton' onclick="handleAuthClick()" style="display: none;">
       <i class='fa fa-unlock'></i>Refresh
     </paper-button>
-    <paper-button href="https://drive.google.com/drive/u/1/folders/0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg" id='refreshAll'>
-      <img src='gDrive.png' style='height: 20px;'> Drive
-    </paper-button>
+    
 
-  </paper-toolbar>
-  <div class="container-fluid">
-    <div id='movie-list'>
-    </div>
-  </div>
-</paper-header-panel>
-  
+    </paper-toolbar>
+    <div id='movie-list'></div>
+  </paper-header-panel>
+</paper-drawer-panel>
+
 </body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script>
   var movies = <%- JSON.stringify(movies) %> ;
