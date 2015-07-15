@@ -1,5 +1,5 @@
 {
-  "name": "MovieTheater",
+  "name": "MovieDrive",
   "version": "0.0.1",
   "scripts": {
     "start": "node web"
@@ -7,6 +7,7 @@
   "dependencies": {
     "express": "4.12.4",
     "ejs": "2.3.1",
-    "body-parser": "1.12.4"
+    "body-parser": "1.12.4",
+    "request": "2.57.0"
   }
 }
