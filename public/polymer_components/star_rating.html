@@ -1,0 +1,33 @@
+<link rel="import" href="/components/polymer/polymer.html">
+
+<style>
+  #rating{
+    color: rgb(51, 51, 51);
+  }
+</style>
+
+<dom-module id="star-rating">
+  <template>
+    <div id="rating">
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "star-rating",
+      properties: {
+        rate: {
+          type: Number,
+          value: 0
+        }
+      },
+      attached: function(){
+        for(i=0; i<parseInt(this.rate); i++)
+          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"fa fa-star\"></i>");
+
+        if(this.rate*2%2 == 1)
+          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"fa fa-star-half-o\"></i>");
+      }
+    });
+  </script> 
+</dom-module>

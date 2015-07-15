@@ -1,6 +1,6 @@
 body{
-  background-color: #1f1f1f;
-  font-family: 'Happy Monkey', cursive;
+  background-color: #e5e5e5;
+  font-family: Roboto;
 }
 
 a, a:hover, a:focus, a:active{
@@ -12,26 +12,6 @@ a, a:hover, a:focus, a:active{
   margin-bottom: 10px;
 }
 
-.movie-poster{
-  width: 100%;
-  display: table;
-}
-
-.movie-title{
-  font-size: 16px;
-  color: white;
-  text-indent: 3px;
-    overflow: hidden;
-  white-space: nowrap;
-}
-
-.movie-meta{
-  font-size: 14px;
-  text-indent: 3px;
-    overflow: hidden;
-  white-space: nowrap;
-}
-
-.poster-hovered{
-  border: 2px solid rgb(125, 255, 0);
+a#refreshAll:hover {
+  color: red;
 }
