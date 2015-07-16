@@ -24,8 +24,8 @@ a, a:hover, a:focus, a:active { color: inherit; text-decoration: none; }
 
 #movie-list { margin-left: auto; margin-right: auto; }
 @media only screen and (min-width: 320px) { #movie-list { width: 380px; } }
-@media only screen and (min-width: 768px) { #movie-list { width: 780px; } }
-@media only screen and (min-width: 1024px) { #movie-list { width: 1120px; } }
+@media only screen and (min-width: 768px) { #movie-list { width: 680px; } }
+@media only screen and (min-width: 1024px) { #movie-list { width: 1080px; } }
 @media only screen and (min-width: 1680px) { #movie-list { margin: 0; width: 100%; } }
 
 paper-icon-item { -moz-transition: box-shadow 0.2s ease-in; -o-transition: box-shadow 0.2s ease-in; -webkit-transition: box-shadow 0.2s ease-in; transition: box-shadow 0.2s ease-in; }

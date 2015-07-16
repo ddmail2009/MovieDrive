@@ -1,24 +1,24 @@
 .movie-card-root { background: white; display: inline-block; -moz-transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); -o-transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); -webkit-transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); -moz-box-shadow: 5px 3px 10px; -webkit-box-shadow: 5px 3px 10px; box-shadow: 5px 3px 10px; }
-@media only screen and (min-width: 320px) { .movie-card-root { width: 120px; height: 240px; margin: 2px; } }
+@media only screen and (min-width: 320px) { .movie-card-root { width: 110px; height: 230px; margin: 2px; } }
 @media only screen and (min-width: 768px) { .movie-card-root { width: 180px; height: 340px; margin: 5px; } }
-@media only screen and (min-width: 1024px) { .movie-card-root { width: 250px; height: 450px; margin: 10px; } }
+@media only screen and (min-width: 1024px) { .movie-card-root { width: 230px; height: 430px; margin: 10px; } }
 .movie-card-root:hover { -moz-box-shadow: 10px 6px 15px; -webkit-box-shadow: 10px 6px 15px; box-shadow: 10px 6px 15px; }
 .movie-card-root .poster-root { position: relative; }
 @media only screen and (min-width: 320px) { .movie-card-root .poster-root { padding: 5px; } }
 @media only screen and (min-width: 768px) { .movie-card-root .poster-root { padding: 8px; } }
 @media only screen and (min-width: 1024px) { .movie-card-root .poster-root { padding: 10px; } }
-@media only screen and (min-width: 320px) { .movie-card-root .poster-root .movie-poster { width: 110px; height: 160px; } }
+@media only screen and (min-width: 320px) { .movie-card-root .poster-root .movie-poster { width: 100px; height: 150px; } }
 @media only screen and (min-width: 768px) { .movie-card-root .poster-root .movie-poster { width: 164px; height: 254px; } }
-@media only screen and (min-width: 1024px) { .movie-card-root .poster-root .movie-poster { width: 230px; height: 360px; } }
+@media only screen and (min-width: 1024px) { .movie-card-root .poster-root .movie-poster { width: 210px; height: 340px; } }
 .movie-card-root .poster-root .overlay { background-color: rgba(0, 0, 0, 0.4); opacity: 0; position: absolute; -moz-transition: opacity 0.2s ease-out; -o-transition: opacity 0.2s ease-out; -webkit-transition: opacity 0.2s ease-out; transition: opacity 0.2s ease-out; }
-@media only screen and (min-width: 320px) { .movie-card-root .poster-root .overlay { width: 110px; height: 160px; top: 5px; } }
+@media only screen and (min-width: 320px) { .movie-card-root .poster-root .overlay { width: 100px; height: 150px; top: 5px; } }
 @media only screen and (min-width: 768px) { .movie-card-root .poster-root .overlay { width: 164px; height: 254px; top: 8px; } }
-@media only screen and (min-width: 1024px) { .movie-card-root .poster-root .overlay { width: 230px; height: 360px; top: 10px; } }
+@media only screen and (min-width: 1024px) { .movie-card-root .poster-root .overlay { width: 210px; height: 340px; top: 10px; } }
 .movie-card-root .poster-root .overlay:hover { opacity: 1; }
 .movie-card-root .poster-root .overlay > i { font-size: 56px; color: white; position: relative; }
-@media only screen and (min-width: 320px) { .movie-card-root .poster-root .overlay > i { top: 110px; left: 20px; font-size: 32px; } }
+@media only screen and (min-width: 320px) { .movie-card-root .poster-root .overlay > i { top: 100px; left: 20px; font-size: 32px; } }
 @media only screen and (min-width: 768px) { .movie-card-root .poster-root .overlay > i { top: 194px; left: 20px; font-size: 46px; } }
-@media only screen and (min-width: 1024px) { .movie-card-root .poster-root .overlay > i { top: 290px; left: 20px; font-size: 56px; } }
+@media only screen and (min-width: 1024px) { .movie-card-root .poster-root .overlay > i { top: 270px; left: 20px; font-size: 56px; } }
 .movie-card-root .movie-data { padding: 8px; overflow: hidden; white-space: nowrap; }
 .movie-card-root .movie-data .movie-title { line-height: 20px; }
 @media only screen and (min-width: 320px) { .movie-card-root .movie-data .movie-title { font-size: 14px; } }
