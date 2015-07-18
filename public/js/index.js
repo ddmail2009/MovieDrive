@@ -169,7 +169,7 @@ function updateMovieList(all){
         console.log("post return data: " + data);
       });
       $("#movie-list").html("");
-      addMovieItems(movies, "modifiedDate");
+      addMovieItems(movies, "modifiedDate", true);
 
       $("#refreshAll").show();
       $("#refresh").show();
@@ -178,7 +178,7 @@ function updateMovieList(all){
 }
 
 $(document).ready(function(){
-  if(movies.length) addMovieItems(movies, "modifiedDate");
+  if(movies.length) addMovieItems(movies, "modifiedDate", true);
   $("#refresh").click(function(){
     updateMovieList(false);
   });
@@ -199,7 +199,7 @@ $(document).ready(function(){
   });
   $("#sortMDate").click(function(){
     $("#movie-list").html("");
-    addMovieItems(movies, "modifiedDate");
+    addMovieItems(movies, "modifiedDate", true);
   })
 
   $("#search").on('input', function(){
@@ -208,7 +208,7 @@ $(document).ready(function(){
     currentMovies = getSubMovies(movies, S);
     console.log(currentMovies);
     $("#movie-list").html("");
-    addMovieItems(currentMovies, "modifiedDate");
+    addMovieItems(currentMovies, "modifiedDate", true);
   });
 
   $(document).scroll(function(){
