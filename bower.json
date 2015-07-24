@@ -3,13 +3,6 @@
   "private": true,
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
-    "jquery": "2.1.4",
-    "paper-progress": "PolymerElements/paper-progress#^1.0.0",
-    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0",
-    "paper-toolbar": "PolymerElements/paper-toolbar#^1.0.0",
-    "paper-button": "PolymerElements/paper-button#^1.0.0",
-    "paper-input": "PolymerElements/paper-input#^1.0.0",
-    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.0",
-    "paper-item": "PolymerElements/paper-item#^1.0.0"
+    "bootstrap-material-design": "bootstrap-material-design#~0.3.0"
   }
 }

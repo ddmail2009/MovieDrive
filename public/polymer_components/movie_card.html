@@ -1,0 +1,69 @@
+<link rel="import" href="/components/polymer/polymer.html">
+
+<dom-module id="movie-card">
+  <link rel="stylesheet" href="/css/movie_card.css">
+  <template>
+    <div class="movie-card-root mdl-shadow--8dp">
+        <div class="poster-root">
+          <img src="{{poster}}" onerror="this.src='/poster.jpg'" alt="poster" class="movie-poster">
+          <div class="overlay"></div>
+        </div>
+        
+        <div class="movie-play-button mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab mdl-js-ripple-effect">
+          <i class="material-icons">play_arrow</i>
+        </div>
+
+        <div class="movie-data">
+          <div class="movie-title">{{title}}</div>
+          <div class="movie-meta">{{release_date}}</div>
+          <content></content>
+        </div>
+        <div class="movie-rating">
+          <star-rating rate="{{ComputeRate(score)}}"></star-rating>
+          <a href="#">
+            <i class="material-icons">cloud_upload</i>
+          </a>
+        </div>
+      <!-- </a> -->
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "movie-card",
+      properties: {
+      },
+      attached: function(){
+        var id = $(this).attr("id");
+        var index = $(this).attr("index");
+        var data = movies[index];
+        this.title = data.title;
+        this.poster = "poster/" + data.poster_path;
+        this.score = data.vote_average;
+        this.release_date = data.release_date;
+
+        $(this).hover(function(){
+          $(this).find(".overlay").css("opacity", "1");
+        }, function(){
+          $(this).find(".overlay").css("opacity", "0");
+        });
+
+        $(this).click(function(){
+          addBackDrop(index);
+        });
+
+        $(this).find(".movie-play-button").click(function(){
+          createDocPicker(id);
+        });
+        
+        $(this).find(".movie-rating .material-icons").click(function(){
+          createUploadPicker(id);
+        });
+
+      },
+      ComputeRate: function(rate){
+        return parseInt(parseFloat(rate)+0.5)/2.0;
+      }
+    });
+  </script> 
+</dom-module>

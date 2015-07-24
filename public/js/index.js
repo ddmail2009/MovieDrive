@@ -1,5 +1,18 @@
 var defered = [];
 
+
+function insertFolderToDrive(title){
+  metaData = {
+    "title": title,
+    "mimeType": "application/vnd.google-apps.folder",
+    "parents": [{"id": "0B50CePww-EvZflNDMGJIaU1lZ3ZIM2ZHREJQMEhrYk1fZmtENDhtc25nSFFFSE5XNndpXzg"}]
+  }
+  gapi.client.drive.files.insert(metaData).B.execute(function(result){
+    console.log(result);
+    createUploadPicker(result.id);
+  });
+}
+
 function splitFolderName(name){
   var m, title=name, year;
   if((m = /(?!\()[0-9]{4}(?=\))/.exec(name)) != null){
@@ -8,33 +21,36 @@ function splitFolderName(name){
   }
   return {"title": title, "year": year};
 }
+
 function addMovieItems(movies, sortField, reverse){
   sortField = sortField || "title";
   reverse = reverse || false;
-  console.log("sort Field: " + sortField);
-  console.log("reverse: " + reverse);
+
+  console.log("sort Field: " + sortField + ", reverse: " + reverse);
   movies.sort(function(a, b){
     if(a[sortField] > b[sortField]) return 1;
     else if(a[sortField] < b[sortField]) return -1;
     else return 0;
   });
   if(reverse) movies.reverse();
+
   for(i in movies){
     template = "<movie-card></movie-card>";
-    template = $(template).attr("link", movies[i].alternateLink);
-    template = $(template).attr("title", movies[i].title);
-    template = $(template).attr("poster", movies[i].img);
-    template = $(template).attr("score", movies[i].vote_average);
-    template = $(template).attr("meta", movies[i].release_date);
-
+    template = $(template).attr("id", movies[i].id);
+    template = $(template).attr("index", i);
     $("#movie-list").append(template);
   }
-  $(".movie-item").hover(function(){
-    $(this).find(".movie-poster").addClass("poster-hovered");
-  }, function(){
-    $(this).find(".movie-poster").removeClass("poster-hovered");
-  });
 }
+
+function addBackDrop(index){
+  $(".mdl-layout__content").append("<backdrop-card id='" + movies[index].id + "' index='" + index + "'></backdrop-card>")
+
+  // destroy when click outside
+  // $(".screen-overlay").click(function(){
+  //   $("backdrop-card").remove();
+  // });
+}
+
 // retrieve all folder information then callback with list
 function retrieveAllFiles(callback) {
   var retrievePageOfFiles = function(request, result) {
@@ -75,17 +91,19 @@ function fetchAJAXCall(list, i){
     indexValue: i,
     strip_title: meta['title'],
     success: function(data){
-      bestFit = {"title": "no match", "img": "poster.jpg", "alternateLink": "#", "votes": -1};
+      bestFit = {"title": "no match", "poster_path": "poster.jpg", "alternateLink": "#", "votes": -1};
       for(j in data.results){
         if(data.results[j].vote_average*data.results[j].vote_count > bestFit.votes) 
           bestFit = data.results[j];
       }
-      list[this.indexValue].folder_title = list[this.indexValue].title;
-      list[this.indexValue].folder_strip_title = this.strip_title;
-      list[this.indexValue].title = bestFit.title || bestFit.original_name;
-      list[this.indexValue].vote_average = bestFit.vote_average;
-      list[this.indexValue].img = "/poster" + bestFit.poster_path;
-      list[this.indexValue].release_date = bestFit.release_date;
+
+      list[this.indexValue].folder_title = list[this.indexValue].title
+      delete list[this.indexValue].title;
+
+      $.extend(bestFit, list[this.indexValue]);
+      bestFit.title = bestFit.title || bestFit.original_name;
+      bestFit.folder_strip_title = this.strip_title;
+      list[this.indexValue] = bestFit;
     }
   }));
 }
@@ -168,8 +186,7 @@ function updateMovieList(all){
       $.post("/updateMovieList", {"movie": JSON.stringify(movies)}, function(data){
         console.log("post return data: " + data);
       });
-      $("#movie-list").html("");
-      addMovieItems(movies, "modifiedDate", true);
+      $("#sortMDate").click();
 
       $("#refreshAll").show();
       $("#refresh").show();
@@ -178,26 +195,42 @@ function updateMovieList(all){
 }
 
 $(document).ready(function(){
-  if(movies.length) addMovieItems(movies, "modifiedDate", true);
   $("#refresh").click(function(){
     updateMovieList(false);
   });
   $("#refreshAll").click(function(){
-    updateMovieList(true);
+    var t = confirm("This require " + movies.length/40*15 + " seconds to finsh, continue?");
+    if(t) updateMovieList(true);
   });
   $("#sortTitle").click(function(){
+    $("paper-icon-item").removeAttr("selected");
+    $(this).attr("selected", "selected");
+
+    $("#search").val("");
     $("#movie-list").html("");
     addMovieItems(movies, "title");
   });
   $("#sortDate").click(function(){
+    $("paper-icon-item").removeAttr("selected");
+    $(this).attr("selected", "selected");
+
+    $("#search").val("");
     $("#movie-list").html("");
     addMovieItems(movies, "release_date", true);
   });
   $("#sortRate").click(function(){
+    $("paper-icon-item").removeAttr("selected");
+    $(this).attr("selected", "selected");
+
+    $("#search").val("");
     $("#movie-list").html("");
     addMovieItems(movies, "vote_average", true);
   });
   $("#sortMDate").click(function(){
+    $("paper-icon-item").removeAttr("selected");
+    $(this).attr("selected", "selected");
+
+    $("#search").val("");
     $("#movie-list").html("");
     addMovieItems(movies, "modifiedDate", true);
   })
@@ -211,10 +244,7 @@ $(document).ready(function(){
     addMovieItems(currentMovies, "modifiedDate", true);
   });
 
-  $(document).scroll(function(){
-    if(document.body.scrollTop > 64)
-      $(".navbar").addClass("navbar-fixed-top");
-    else
-      $(".navbar").removeClass("navbar-fixed-top");
-  });
+
+  if(movies.length) 
+    $("#sortMDate").click();
 });

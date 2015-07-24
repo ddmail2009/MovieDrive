@@ -15,19 +15,27 @@ a img { border: none; }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary { display: block; }
 
-body { background-color: #e5e5e5; font-family: Roboto; }
+* { box-sizing: border-box; }
+
+body { background-color: #00302c; font-family: Roboto; }
 
 a, a:hover, a:focus, a:active { color: inherit; text-decoration: none; }
+a img { border: 0px; }
+
+textarea:disabled { background-color: transparent; border: 0; width: 100%; color: inherit; font-size: inherit; font-family: inherit; resize: none; padding: 0; }
+
+.material-icons { font-size: inherit; }
 
 #refreshAll { -moz-transition: color 0.2s linear; -o-transition: color 0.2s linear; -webkit-transition: color 0.2s linear; transition: color 0.2s linear; }
 #refreshAll:hover { color: red; }
 
-#movie-list { margin-left: auto; margin-right: auto; }
-@media only screen and (min-width: 320px) { #movie-list { width: 380px; } }
-@media only screen and (min-width: 768px) { #movie-list { width: 680px; } }
-@media only screen and (min-width: 1024px) { #movie-list { width: 1080px; } }
-@media only screen and (min-width: 1680px) { #movie-list { margin: 0; width: 100%; } }
+.android-header .android-search-box { -webkit-box-ordinal-group: 3; -moz-box-ordinal-group: 3; -ms-box-ordinal-group: 3; box-ordinal-group: 3; -webkit-order: 2; order: 2; margin-left: 16px; margin-right: 16px; }
+.android-header .android-navigation-container { /* Simple hack to make the overflow happen to the left instead... */ direction: rtl; -webkit-box-ordinal-group: 2; -moz-box-ordinal-group: 2; -ms-box-ordinal-group: 2; box-ordinal-group: 2; -webkit-order: 1; order: 1; width: 500px; -moz-transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1); -o-transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1); -webkit-transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1); transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+.android-header .android-navigation-container .android-navigation { direction: ltr; -webkit-justify-content: flex-end; justify-content: flex-end; -webkit-box-pack: end; -moz-box-pack: end; -ms-box-pack: end; box-pack: end; width: 800px; }
+.android-header .android-navigation-container .android-navigation .mdl-navigation__link:hover { border-bottom: 4px solid #8bc34a; }
+.android-header .android-more-button { -webkit-box-ordinal-group: 4; -moz-box-ordinal-group: 4; -ms-box-ordinal-group: 4; box-ordinal-group: 4; -webkit-order: 3; order: 3; }
+.android-header .android-search-box.is-focused ~ .android-navigation-container { opacity: 0; width: 100px; }
 
-paper-icon-item { -moz-transition: box-shadow 0.2s ease-in; -o-transition: box-shadow 0.2s ease-in; -webkit-transition: box-shadow 0.2s ease-in; transition: box-shadow 0.2s ease-in; }
-paper-icon-item:hover { -moz-box-shadow: 0px 0px 10px; -webkit-box-shadow: 0px 0px 10px; box-shadow: 0px 0px 10px; }
-paper-icon-item:active { -moz-box-shadow: 0px 0px 5px; -webkit-box-shadow: 0px 0px 5px; box-shadow: 0px 0px 5px; }
+.mdl-layout__drawer { border-right: 0px; }
+.mdl-layout__drawer > .mdl-layout-title { background: #6ab344; color: white; }
+.mdl-layout__drawer .android-drawer-separator { height: 1px; background-color: #dcdcdc; margin: 8px 0; }

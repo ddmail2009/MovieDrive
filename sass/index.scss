@@ -1,0 +1,100 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "compass/css3/box";
+@import "mixin.scss";
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  background-color: darken(#009688, 20%);
+  font-family: Roboto;
+}
+
+a{
+  &, &:hover, &:focus, &:active{
+    color: inherit;
+    text-decoration: none;
+  }
+  img{
+    border: 0px;
+  }
+}
+
+textarea:disabled {
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  resize: none;
+  padding: 0;
+}
+
+.material-icons{
+  font-size: inherit;
+}
+
+
+#refreshAll{
+  @include transition(color 0.2s linear);
+  &:hover{
+    color: red;
+  }
+}
+
+
+.android-header{
+  .android-search-box{
+    @include box-ordinal-group(3);
+    @include order(2);
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .android-navigation-container{
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    @include box-ordinal-group(2);
+    @include order(1);
+    width: 500px;
+    @include transition(opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1));
+
+    & .android-navigation{
+      direction: ltr;
+      @include justify-content(flex-end);
+      @include box-pack(end);
+      width: 800px;
+
+      & .mdl-navigation__link:hover{
+        border-bottom: 4px solid #8bc34a;
+      }
+    }
+  }
+
+  .android-more-button{
+    @include box-ordinal-group(4);
+    @include order(3);
+  }
+
+  .android-search-box.is-focused ~ .android-navigation-container{
+    opacity: 0;
+    width: 100px;
+  }
+}
+
+.mdl-layout__drawer{
+  border-right: 0px;
+  &>.mdl-layout-title{
+    background: #6ab344;
+    color: white;
+  }
+
+  & .android-drawer-separator{
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+  }
+}

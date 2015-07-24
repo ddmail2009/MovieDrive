@@ -1,0 +1,69 @@
+<link rel="import" href="/components/polymer/polymer.html">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<dom-module id="backdrop-card">
+  <link rel="stylesheet" href="/css/backdrop_card.css">
+  <template>
+    <div class="screen-overlay"></div>
+    <div class="backdrop-card-root mdl-shadow--8dp">
+      <div class="data-container mdl-color--accent">
+        <div class="header_title">
+          <div class="movie_title">{{title}}</div>
+          <div class="movie_release">{{release_date}}</div>
+        </div>
+        <div class="poster ">
+          <img src="{{poster}}" onerror="this.src='/poster.jpg'" alt="poster" class="mdl-shadow--8dp">
+        </div>
+        <div class="metaData">
+          <textarea disabled class="overview">{{meta}}</textarea>
+          <star-rating rate="{{ComputeRate(score)}}"></star-rating> 
+          <span>(<span>{{vote_count}}</span> votes)</span>
+        </div>
+        <button class="play_button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary mdl-button-raised">
+          <i class="material-icons">play_arrow</i>
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "backdrop-card",
+      properties: {
+        id:{
+          type: String,
+          value: ""
+        }
+      }, attached: function(){
+        var index = $(this).attr("index");
+        this.data = movies[index];
+        this.title = this.data.title;
+        this.poster = "poster/" + this.data.poster_path;
+        if(this.data.backdrop_path)
+          this.backdrop = "https://image.tmdb.org/t/p/w780/" + this.data.backdrop_path;
+        else
+          this.backdrop = this.poster;
+        this.meta = this.data.overview;
+        this.release_date = this.data.release_date;
+        this.score = this.data.vote_average;
+        this.vote_count = this.data.vote_count;
+
+        $(this).find(".backdrop-card-root").css("background-image", "url(\'" + this.backdrop + "\')");
+
+        var id = this.id;
+        $(this).find(".play_button").click(function(){
+          createDocPicker(id);
+        });
+
+        Polymer.dom.flush();
+        this.async(function(){
+          $(this).find(".screen-overlay").addClass("overlay");
+          $(this).find(".screen-overlay").click(function(){
+            $("backdrop-card").remove();
+          });
+        }, 100);
+      }, ComputeRate: function(rate){
+        return parseInt(parseFloat(rate)+0.5)/2.0;
+      }
+    });
+  </script>   
+</dom>

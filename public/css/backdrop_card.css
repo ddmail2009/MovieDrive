@@ -1,0 +1,31 @@
+.screen-overlay { width: 100%; height: 100%; position: absolute; top: 0; background-color: black; z-index: 1; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; -moz-transition: opacity 0.1s linear; -o-transition: opacity 0.1s linear; -webkit-transition: opacity 0.1s linear; transition: opacity 0.1s linear; }
+.screen-overlay.overlay { filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85); opacity: 0.85; }
+
+.backdrop-card-root { position: absolute; top: 50%; left: 50%; z-index: 2; background-position-x: 0; background-position-y: -50px; background-size: cover; background-color: black; overflow: hidden; width: 1024px; height: 576px; margin-left: -512px; margin-top: -288px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
+@media only screen and (max-width: 1024px) { .backdrop-card-root { width: 768px; height: 432px; margin-left: -384px; margin-top: -216px; } }
+@media only screen and (max-width: 768px) { .backdrop-card-root { background-position: center; width: 320px; height: 480px; margin-left: -160px; margin-top: -240px; } }
+@media only screen and (max-width: 320px) { .backdrop-card-root { width: 256px; height: 384px; margin-left: -128px; margin-top: -192px; } }
+.backdrop-card-root .data-container { position: absolute; display: -webkit-flex; display: flex; top: 60%; width: 100%; height: 40%; }
+@media only screen and (max-width: 1024px) { .backdrop-card-root .data-container { top: 50%; width: 100%; height: 50%; } }
+@media only screen and (max-width: 768px) { .backdrop-card-root .data-container { top: 70%; width: 100%; height: 30%; } }
+.backdrop-card-root .data-container .header_title { position: absolute; overflow: hidden; line-height: 70px; top: -90px; left: 256px; width: 768px; }
+.backdrop-card-root .data-container .header_title .movie_title { font-weight: 800; color: white; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-shadow: 2px 4px 5px black; display: inline-block; font-size: 64px; width: 70%; }
+.backdrop-card-root .data-container .header_title .movie_release { font-size: 28px; color: #e6e6e6; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: inline-block; width: calc(30% - 10px); text-shadow: 1px 2px 2px black; }
+@media only screen and (max-width: 1024px) { .backdrop-card-root .data-container .header_title { line-height: 70px; top: -90px; left: 192px; width: 576px; }
+  .backdrop-card-root .data-container .header_title .movie_title { font-size: 54px; } }
+@media only screen and (max-width: 768px) { .backdrop-card-root .data-container .header_title { line-height: 32px; top: -47px; left: 80px; width: 240px; }
+  .backdrop-card-root .data-container .header_title .movie_title { width: 100%; font-size: 32px; }
+  .backdrop-card-root .data-container .header_title .movie_release { display: none; } }
+@media only screen and (max-width: 320px) { .backdrop-card-root .data-container .header_title { left: 64px; width: 192px; } }
+.backdrop-card-root .data-container .poster { height: 100%; width: 30%; display: inline-block; }
+.backdrop-card-root .data-container .poster img { position: absolute; width: 170.66667px; top: -128px; left: 42.66667px; }
+@media only screen and (max-width: 1024px) { .backdrop-card-root .data-container .poster img { width: 128px; top: -96px; left: 32px; } }
+@media only screen and (max-width: 768px) { .backdrop-card-root .data-container .poster img { width: 53.33333px; top: -40px; left: 13.33333px; } }
+@media only screen and (max-width: 320px) { .backdrop-card-root .data-container .poster img { width: 42.66667px; top: -32px; left: 10.66667px; } }
+.backdrop-card-root .data-container .metaData { height: 100%; width: 70%; display: inline-block; font-size: 18px; color: white; padding: 28px; }
+.backdrop-card-root .data-container .metaData .overview { height: 80%; text-overflow: ellipsis; }
+.backdrop-card-root .data-container .metaData star-rating { font-size: 36px; }
+@media only screen and (max-width: 768px) { .backdrop-card-root .data-container .metaData { font-size: 12px; padding: 10px 10px 0 0; }
+  .backdrop-card-root .data-container .metaData star-rating { font-size: 12px; } }
+.backdrop-card-root .data-container .play_button { position: absolute; top: -28px; right: 64px; }
+@media only screen and (max-width: 768px) { .backdrop-card-root .data-container .play_button { font-size: 26px; min-width: 40px; width: 40px; min-height: 40px; height: 40px; top: -50px; right: 0; } }

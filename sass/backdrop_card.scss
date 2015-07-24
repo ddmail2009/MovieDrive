@@ -1,0 +1,217 @@
+@import "compass/css3";
+@import "mixin.scss";
+// original size
+$width: 1024px;
+$height: 576px;
+// size below 1024 screen
+$pcwidth: 768px;
+$pcheight: 432px;
+// size below 768 screen 
+$padwidth: 320px;
+$padheight: 480px;
+// size below 320 screen
+$mobilewidth: 256px;
+$mobileheight: 384px;
+
+.screen-overlay{
+  @include size(100%, 100%);
+  position: absolute;
+  top: 0;
+  background-color: black;
+  z-index: 1;
+  @include opacity(0);
+  @include transition(opacity 0.1s linear);
+
+  &.overlay{
+    @include opacity(0.85);
+  }
+}
+
+.backdrop-card-root{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  background-position-x: 0;
+  background-position-y: -50px;
+  background-size: cover;
+  background-color: black;
+  overflow: hidden;
+  
+  @include size($width, $height);
+  margin-left: -$width/2;
+  margin-top: -$height/2;
+
+  @include border-radius(4px);
+  @include breakpoint(pc){
+    @include size($pcwidth, $pcheight);
+    margin-left: -$pcwidth/2;
+    margin-top: -$pcheight/2;
+  }
+  @include breakpoint(pad){
+    background-position: center;
+    @include size($padwidth, $padheight);
+    margin-left: -$padwidth/2;
+    margin-top: -$padheight/2;
+  }
+  @include breakpoint(mobile){
+    @include size($mobilewidth, $mobileheight);
+    margin-left: -$mobilewidth/2;
+    margin-top: -$mobileheight/2;
+  }
+
+  .data-container{
+    position: absolute;
+    @include display-flex;
+    top: 60%;
+    @include size(100%, 40%);
+
+    @include breakpoint(pc){
+      top: 50%;
+      @include size(100%, 50%);
+    }
+    @include breakpoint(pad){
+      top: 70%;
+      @include size(100%, 30%);
+    }
+
+    .header_title{
+      position: absolute;
+      overflow: hidden;
+  
+      line-height: 70px;
+      top: -90px;
+      left: $width / 12 * 3;
+      width: $width / 12 * 9;
+
+      .movie_title{
+        font-weight: 800;
+        color: white;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        @include text-shadow(2px 4px 5px black);
+
+        display: inline-block;
+        
+
+        font-size: 64px;
+        width: 70%;
+      }
+
+      .movie_release{
+        font-size: 28px;
+        color: darken(white, 10%);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+
+        width: calc(30% - 10px);
+        @include text-shadow(1px 2px 2px black);
+      }  
+      
+      @include breakpoint(pc){
+        line-height: 70px;
+        top: -90px;
+        left: $pcwidth / 12 * 3;
+        width: $pcwidth / 12 * 9;
+
+        .movie_title{
+          font-size: 54px;
+        }
+      }
+      @include breakpoint(pad){
+        line-height: 32px;
+        top: -47px;
+        left: $padwidth / 12 * 3;
+        width: $padwidth / 12 * 9;
+
+        .movie_title{
+          width: 100%;
+          font-size: 32px;
+        }
+        .movie_release{
+          display: none;
+        }
+      }
+      @include breakpoint(mobile){
+        left: $mobilewidth / 12 * 3;
+        width: $mobilewidth / 12 * 9;
+      }
+    }
+
+    .poster{
+      height: 100%;
+      width: 30%;
+      display: inline-block;
+      img {
+        position: absolute;
+        width: $width / 12 * 2;
+        top:  -$width / 12 * 1.5;
+        left:  $width / 12 / 2;
+
+        @include breakpoint(pc){
+          width: $pcwidth / 12 * 2;
+          top:  -$pcwidth / 12 * 1.5;
+          left:  $pcwidth / 12 / 2;
+        }
+        @include breakpoint(pad){
+          width: $padwidth / 12 * 2;
+          top:  -$padwidth / 12 * 1.5;
+          left:  $padwidth / 12 / 2;
+        }
+        @include breakpoint(mobile){
+          width: $mobilewidth / 12 * 2;
+          top:  -$mobilewidth / 12 * 1.5;
+          left:  $mobilewidth / 12 / 2;
+        }
+      }
+    }
+
+    .metaData{
+      height: 100%;
+      width: 70%;
+      display: inline-block;
+      font-size: 18px;
+      color: white;
+      padding: 28px;
+
+      .overview{
+        height: 80%;
+        text-overflow: ellipsis;
+      }
+
+      star-rating{
+        font-size: 36px;
+      }
+      
+      @include breakpoint(pad){
+        font-size: 12px;
+        padding: 10px 10px 0 0;
+        star-rating{
+          font-size: 12px;
+        }
+      }
+      @include breakpoint(mobile){
+        
+      }
+    }
+
+    .play_button{
+      position: absolute;
+      top: -28px;
+      right: $pcwidth / 12;
+
+      @include breakpoint(pad){
+        font-size: 26px;
+        min-width: 40px;
+        width: 40px;
+        min-height: 40px;
+        height: 40px;
+        top: -50px;
+        right: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.movie-card-root { position: relative; background: white; display: inline-block; overflow: hidden; width: 190px; height: 380px; margin: 8px; -moz-transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); -o-transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); -webkit-transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); transition: opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1); -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37); -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37); box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37); }
+@media only screen and (max-width: 320px) { .movie-card-root { width: 80px; height: 190px; } }
+@media only screen and (max-width: 768px) { .movie-card-root { width: 110px; height: 260px; margin: 5px; } }
+.movie-card-root .poster-root { position: relative; }
+.movie-card-root .poster-root .movie-poster { width: 190px; height: 280px; }
+.movie-card-root .poster-root .overlay { background-color: rgba(0, 0, 0, 0.4); opacity: 0; position: absolute; top: 0px; -moz-transition: opacity 0.2s ease-out; -o-transition: opacity 0.2s ease-out; -webkit-transition: opacity 0.2s ease-out; transition: opacity 0.2s ease-out; width: 190px; height: 280px; }
+@media only screen and (max-width: 320px) { .movie-card-root .poster-root .movie-poster, .movie-card-root .poster-root .overlay { width: 80px; height: 90px; } }
+@media only screen and (max-width: 768px) { .movie-card-root .poster-root .movie-poster, .movie-card-root .poster-root .overlay { width: 110px; height: 160px; } }
+.movie-card-root .movie-play-button { position: absolute; z-index: 1; left: 135px; top: 260px; }
+.movie-card-root .movie-play-button:hover { -moz-box-shadow: 1px 1px 5px black; -webkit-box-shadow: 1px 1px 5px black; box-shadow: 1px 1px 5px black; }
+@media only screen and (max-width: 320px) { .movie-card-root .movie-play-button { left: 36px; top: 70px; } }
+@media only screen and (max-width: 768px) { .movie-card-root .movie-play-button { left: 63px; top: 140px; } }
+.movie-card-root .movie-data { position: relative; padding: 20px 4px 10px 10px; white-space: nowrap; }
+.movie-card-root .movie-data .movie-title { font-size: 18px; line-height: 20px; text-overflow: ellipsis; overflow: hidden; }
+.movie-card-root .movie-data .movie-meta { font-size: 14px; }
+@media only screen and (max-width: 768px) { .movie-card-root .movie-data { height: 76px; }
+  .movie-card-root .movie-data .movie-title { font-size: 14px; }
+  .movie-card-root .movie-data .movie-meta { font-size: 12px; } }
+@media only screen and (max-width: 320px) { .movie-card-root .movie-data { height: 76px; } }
+.movie-card-root .movie-rating { padding: 5px; width: 100%; background-color: #3f51b5; color: white; }
+@media only screen and (max-width: 768px) { .movie-card-root .movie-rating { font-size: 12px; } }

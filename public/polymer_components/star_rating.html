@@ -2,7 +2,7 @@
 
 <style>
   #rating{
-    color: rgb(51, 51, 51);
+    display: inline-block;
   }
 </style>
 
@@ -22,11 +22,13 @@
         }
       },
       attached: function(){
+        this.firstElementChild.innerHTML = ""
         for(i=0; i<parseInt(this.rate); i++)
-          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"fa fa-star\"></i>");
-
+          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"material-icons\">star</i>");
         if(this.rate*2%2 == 1)
-          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"fa fa-star-half-o\"></i>");
+          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"material-icons\">star_half</i>");
+        for(i=parseInt(this.rate+0.5); i<5; i++)
+          this.firstElementChild.innerHTML = this.firstElementChild.innerHTML.concat("<i class=\"material-icons\">star_border</i>");
       }
     });
   </script> 

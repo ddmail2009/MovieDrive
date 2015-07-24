@@ -1,0 +1,127 @@
+@import "compass/css3";
+@import "mixin.scss";
+
+$pcwidth: 190px;
+$pcheight: 380px;
+$pcdataheight: 100px;
+
+$padwidth: 110px;
+$padheight: 260px;
+$paddataheight: 100px;
+
+$mobilewidth: 80px;
+$mobileheight: 190px;
+$mobiledataheight: 100px;
+
+.movie-card-root{
+  position: relative;
+  background: white;
+  display: inline-block;
+  overflow: hidden;
+  @include size($pcwidth, $pcheight);
+  margin: 8px;  
+
+  @include transition(opacity 0.2s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1));
+  @include border-radius(3px);
+  @include box-shadow(0 1px 4px 0 rgba(0, 0, 0, 0.37));
+
+
+  @include breakpoint(mobile){
+    @include size($mobilewidth, $mobileheight);
+  }
+  @include breakpoint(pad){
+    @include size($padwidth, $padheight);
+    margin: 5px;
+  }
+
+  & .poster-root{
+    position: relative;
+
+    & .movie-poster{
+      @include size($pcwidth, $pcheight - $pcdataheight);
+    }
+
+    & .overlay{
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      position: absolute;
+      top: 0px;
+      @include transition(opacity 0.2s ease-out);
+      @include size($pcwidth, $pcheight - $pcdataheight);
+    }
+
+    @include breakpoint(mobile){
+      .movie-poster, .overlay{
+        @include size($mobilewidth, $mobileheight - $mobiledataheight);
+      }
+    }
+    @include breakpoint(pad){
+      .movie-poster, .overlay{
+        @include size($padwidth, $padheight - $paddataheight);
+      }
+    }
+  }
+
+  & .movie-play-button{
+    position: absolute;
+    z-index: 1;
+    left: ($pcwidth - 40)*0.9;
+    top: $pcheight - $pcdataheight - 20;
+
+    &:hover{
+      @include box-shadow(1px 1px 5px black);
+    }
+
+    @include breakpoint(mobile){
+      left: ($mobilewidth - 40)*0.9;
+      top: $mobileheight - $mobiledataheight - 20;
+    }
+    @include breakpoint(pad){
+      left: ($padwidth - 40)*0.9;
+      top: $padheight - $paddataheight - 20;
+    }
+  }
+
+  & .movie-data{
+    position: relative;
+    padding: 20px 4px 10px 10px;
+    white-space: nowrap;
+
+    & .movie-title{
+      font-size: 18px;
+      line-height: 20px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    & .movie-meta{
+      font-size: 14px;
+    }
+
+    @include breakpoint(pad){
+      height: $paddataheight - 24px;
+      & .movie-title{
+        font-size: 14px;
+      }
+      & .movie-meta{
+        font-size: 12px;
+      }
+    }
+    @include breakpoint(mobile){
+      height: $mobiledataheight - 24px;
+    }
+
+  }
+
+
+  & .movie-rating{
+    padding: 5px;
+    width: 100%;
+    background-color: rgb(63, 81, 181);
+    color: white;
+
+    @include breakpoint(pad){
+      font-size: 12px;
+    }
+  }
+}
