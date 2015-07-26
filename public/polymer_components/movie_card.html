@@ -36,9 +36,9 @@
       attached: function(){
         var id = $(this).attr("id");
         var index = $(this).attr("index");
-        var data = movies[index];
+        var data = currentMovies[index];
         this.title = data.title;
-        this.poster = "poster/" + data.poster_path;
+        this.poster = "poster" + data.poster_path;
         this.score = data.vote_average;
         this.release_date = data.release_date;
 

@@ -1,6 +1,5 @@
 var defered = [];
 
-
 function insertFolderToDrive(title){
   metaData = {
     "title": title,
@@ -13,21 +12,13 @@ function insertFolderToDrive(title){
   });
 }
 
-function splitFolderName(name){
-  var m, title=name, year;
-  if((m = /(?!\()[0-9]{4}(?=\))/.exec(name)) != null){
-    title = name.slice(0, m.index-2);
-    year = m[0];
-  }
-  return {"title": title, "year": year};
-}
-
 function addMovieItems(movies, sortField, reverse){
   sortField = sortField || "title";
   reverse = reverse || false;
 
   console.log("sort Field: " + sortField + ", reverse: " + reverse);
   movies.sort(function(a, b){
+
     if(a[sortField] > b[sortField]) return 1;
     else if(a[sortField] < b[sortField]) return -1;
     else return 0;
@@ -35,20 +26,22 @@ function addMovieItems(movies, sortField, reverse){
   if(reverse) movies.reverse();
 
   for(i in movies){
-    template = "<movie-card></movie-card>";
-    template = $(template).attr("id", movies[i].id);
-    template = $(template).attr("index", i);
+    template = "<movie-card id=\'" + movies[i].id + "\' index=\'" + i + "\'></movie-card>";
     $("#movie-list").append(template);
   }
 }
 
 function addBackDrop(index){
   $(".mdl-layout__content").append("<backdrop-card id='" + movies[index].id + "' index='" + index + "'></backdrop-card>")
+}
 
-  // destroy when click outside
-  // $(".screen-overlay").click(function(){
-  //   $("backdrop-card").remove();
-  // });
+function splitFolderName(name){
+  var m, title=name, year;
+  if((m = /(?!\()[0-9]{4}(?=\))/.exec(name)) != null){
+    title = name.slice(0, m.index-2);
+    year = m[0];
+  }
+  return {"title": title, "year": year};
 }
 
 // retrieve all folder information then callback with list
@@ -99,6 +92,7 @@ function fetchAJAXCall(list, i){
 
       list[this.indexValue].folder_title = list[this.indexValue].title
       delete list[this.indexValue].title;
+      bestFit.tmdbId = bestFit.id;
 
       $.extend(bestFit, list[this.indexValue]);
       bestFit.title = bestFit.title || bestFit.original_name;
@@ -203,47 +197,45 @@ $(document).ready(function(){
     if(t) updateMovieList(true);
   });
   $("#sortTitle").click(function(){
-    $("paper-icon-item").removeAttr("selected");
+    $(".mdl-navigation__link").removeAttr("selected");
     $(this).attr("selected", "selected");
 
-    $("#search").val("");
     $("#movie-list").html("");
-    addMovieItems(movies, "title");
+    addMovieItems(currentMovies, "title");
   });
   $("#sortDate").click(function(){
-    $("paper-icon-item").removeAttr("selected");
+    $(".mdl-navigation__link").removeAttr("selected");
     $(this).attr("selected", "selected");
 
-    $("#search").val("");
     $("#movie-list").html("");
-    addMovieItems(movies, "release_date", true);
+    addMovieItems(currentMovies, "release_date", true);
   });
   $("#sortRate").click(function(){
-    $("paper-icon-item").removeAttr("selected");
+    $(".mdl-navigation__link").removeAttr("selected");
     $(this).attr("selected", "selected");
 
-    $("#search").val("");
     $("#movie-list").html("");
-    addMovieItems(movies, "vote_average", true);
+    addMovieItems(currentMovies, "vote_average", true);
   });
   $("#sortMDate").click(function(){
-    $("paper-icon-item").removeAttr("selected");
+    $(".mdl-navigation__link").removeAttr("selected");
     $(this).attr("selected", "selected");
 
-    $("#search").val("");
     $("#movie-list").html("");
-    addMovieItems(movies, "modifiedDate", true);
+    addMovieItems(currentMovies, "modifiedDate", true);
   })
 
   $("#search").on('input', function(){
     var S = $(this).val();
-    console.log(S);
     currentMovies = getSubMovies(movies, S);
-    console.log(currentMovies);
-    $("#movie-list").html("");
-    addMovieItems(currentMovies, "modifiedDate", true);
-  });
 
+    console.log(currentMovies);
+    
+    $("#movie-list").html("");
+    addMovieItems(currentMovies, "title", true);
+    $(".mdl-navigation__link").removeAttr("selected");
+    $("#sortTitle").attr("selected", "selected");
+  });
 
   if(movies.length) 
     $("#sortMDate").click();

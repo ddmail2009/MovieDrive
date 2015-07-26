@@ -145,6 +145,7 @@ $mobileheight: 384px;
       height: 100%;
       width: 30%;
       display: inline-block;
+      position: relative;
       img {
         position: absolute;
         width: $width / 12 * 2;
@@ -167,6 +168,29 @@ $mobileheight: 384px;
           left:  $mobilewidth / 12 / 2;
         }
       }
+
+      .genre {
+        position: absolute;
+        bottom: 10px;
+        padding: 20px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        span{
+          text-decoration: underline;
+          font-weight: 800;
+          font-size: 17px;
+          color: white;
+          padding-left: 5px;
+          white-space: nowrap;
+        }
+        @include breakpoint(pad){
+          padding: 0px;
+          span{
+            font-size: 12px;
+          }
+        }
+      }
     }
 
     .metaData{
@@ -185,12 +209,25 @@ $mobileheight: 384px;
       star-rating{
         font-size: 36px;
       }
+
+      .imdb_link{
+        background-color: #E6A521;
+        padding: 8px;
+        font-weight: 800;
+        font-size: 17px;
+        border-radius: 20px;
+      }
+
+      
       
       @include breakpoint(pad){
         font-size: 12px;
         padding: 10px 10px 0 0;
         star-rating{
           font-size: 12px;
+        }
+        .imdb_link{
+          display: none;
         }
       }
       @include breakpoint(mobile){

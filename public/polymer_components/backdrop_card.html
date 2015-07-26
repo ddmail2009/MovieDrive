@@ -12,11 +12,18 @@
         </div>
         <div class="poster ">
           <img src="{{poster}}" onerror="this.src='/poster.jpg'" alt="poster" class="mdl-shadow--8dp">
+          <div class="genre">
+            <span>{{genre0}}</span>
+            <span>{{genre1}}</span>
+            <span>{{genre2}}</span>
+          </div>
         </div>
         <div class="metaData">
           <textarea disabled class="overview">{{meta}}</textarea>
           <star-rating rate="{{ComputeRate(score)}}"></star-rating> 
           <span>(<span>{{vote_count}}</span> votes)</span>
+          <span> <a class="imdb_link">imdb</a> </span>
+          
         </div>
         <button class="play_button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--primary mdl-button-raised">
           <i class="material-icons">play_arrow</i>
@@ -33,15 +40,25 @@
           type: String,
           value: ""
         }
-      }, attached: function(){
+      }, ready: function(){
         var index = $(this).attr("index");
-        this.data = movies[index];
+        this.data = currentMovies[index];
+
+        var backdrop = this;
+        $.get("http://api.themoviedb.org/3/movie/"+this.data.tmdbId, {api_key: "304f4c3ad090ac7a11e707e9cf034ddf"}, function(data){
+          $(backdrop).find(".imdb_link").attr("href", "http://www.imdb.com/title/" + data.imdb_id);
+
+          // first 3 genre to display
+          var genres = data.genres.slice(0, 3).map(function(x){return x.name});
+          backdrop.genre0 = genres[0];
+          backdrop.genre1 = genres[1];
+          backdrop.genre2 = genres[2];
+          console.log(genres);
+        });
+
         this.title = this.data.title;
         this.poster = "poster/" + this.data.poster_path;
-        if(this.data.backdrop_path)
-          this.backdrop = "https://image.tmdb.org/t/p/w780/" + this.data.backdrop_path;
-        else
-          this.backdrop = this.poster;
+        this.backdrop = this.data.backdrop_path ? "https://image.tmdb.org/t/p/w780/" + this.data.backdrop_path : this.poster;
         this.meta = this.data.overview;
         this.release_date = this.data.release_date;
         this.score = this.data.vote_average;

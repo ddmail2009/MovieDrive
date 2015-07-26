@@ -17,15 +17,21 @@
   .backdrop-card-root .data-container .header_title .movie_title { width: 100%; font-size: 32px; }
   .backdrop-card-root .data-container .header_title .movie_release { display: none; } }
 @media only screen and (max-width: 320px) { .backdrop-card-root .data-container .header_title { left: 64px; width: 192px; } }
-.backdrop-card-root .data-container .poster { height: 100%; width: 30%; display: inline-block; }
+.backdrop-card-root .data-container .poster { height: 100%; width: 30%; display: inline-block; position: relative; }
 .backdrop-card-root .data-container .poster img { position: absolute; width: 170.66667px; top: -128px; left: 42.66667px; }
 @media only screen and (max-width: 1024px) { .backdrop-card-root .data-container .poster img { width: 128px; top: -96px; left: 32px; } }
 @media only screen and (max-width: 768px) { .backdrop-card-root .data-container .poster img { width: 53.33333px; top: -40px; left: 13.33333px; } }
 @media only screen and (max-width: 320px) { .backdrop-card-root .data-container .poster img { width: 42.66667px; top: -32px; left: 10.66667px; } }
+.backdrop-card-root .data-container .poster .genre { position: absolute; bottom: 10px; padding: 20px; width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.backdrop-card-root .data-container .poster .genre span { text-decoration: underline; font-weight: 800; font-size: 17px; color: white; padding-left: 5px; white-space: nowrap; }
+@media only screen and (max-width: 768px) { .backdrop-card-root .data-container .poster .genre { padding: 0px; }
+  .backdrop-card-root .data-container .poster .genre span { font-size: 12px; } }
 .backdrop-card-root .data-container .metaData { height: 100%; width: 70%; display: inline-block; font-size: 18px; color: white; padding: 28px; }
 .backdrop-card-root .data-container .metaData .overview { height: 80%; text-overflow: ellipsis; }
 .backdrop-card-root .data-container .metaData star-rating { font-size: 36px; }
+.backdrop-card-root .data-container .metaData .imdb_link { background-color: #E6A521; padding: 8px; font-weight: 800; font-size: 17px; border-radius: 20px; }
 @media only screen and (max-width: 768px) { .backdrop-card-root .data-container .metaData { font-size: 12px; padding: 10px 10px 0 0; }
-  .backdrop-card-root .data-container .metaData star-rating { font-size: 12px; } }
+  .backdrop-card-root .data-container .metaData star-rating { font-size: 12px; }
+  .backdrop-card-root .data-container .metaData .imdb_link { display: none; } }
 .backdrop-card-root .data-container .play_button { position: absolute; top: -28px; right: 64px; }
 @media only screen and (max-width: 768px) { .backdrop-card-root .data-container .play_button { font-size: 26px; min-width: 40px; width: 40px; min-height: 40px; height: 40px; top: -50px; right: 0; } }

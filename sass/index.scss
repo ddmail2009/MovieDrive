@@ -8,7 +8,7 @@
 }
 
 body{
-  background-color: darken(#009688, 20%);
+  background-color: darken(#ffffff, 10%);
   font-family: Roboto;
 }
 
@@ -45,8 +45,10 @@ textarea:disabled {
   }
 }
 
-
 .android-header{
+  .android-title{
+    @include transition(opacity 0.2s ease-in-out);
+  }
   .android-search-box{
     @include box-ordinal-group(3);
     @include order(2);
@@ -83,12 +85,25 @@ textarea:disabled {
     opacity: 0;
     width: 100px;
   }
+
+  @include breakpoint(pad){
+    .android-navigation-container{
+      display: none;
+    }
+    .android-title{
+      position: relative;
+      left: calc(50% - 61.5px);
+    }
+    .android-search-box.is-focused ~ .android-title{
+      opacity: 0;
+    }
+  }
 }
 
 .mdl-layout__drawer{
   border-right: 0px;
   &>.mdl-layout-title{
-    background: #6ab344;
+    background: #2D3E9F;
     color: white;
   }
 
@@ -97,4 +112,9 @@ textarea:disabled {
     background-color: #dcdcdc;
     margin: 8px 0;
   }
+
+  & .mdl-navigation__link[selected]{
+    background-color: #C7CFFC;
+  }
 }
+
